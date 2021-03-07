@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="weatherScript.js" defer></script>
-
+    <script src="weatherScript.js" type="module" defer></script>
+    <link href="main.css" rel="stylesheet"/>
     <title>Document</title>
   </head>
 
@@ -15,16 +15,16 @@
     <div>
       <label>Skriv in en stad för att få väder:</label>
       <br/>
-      <input type="text" id="inputCity"> </input>
-      <br/>
-      <button type="button" onclick="weather.getWeather()">GET DATA</button>
+      <input type="text" id="inputCity" value="London"> </input>
+      <br/><br/>
+      <button id="getWeatherButton" type="button" >GET DATA</button>
     </div>
     
-    <div id ="info">
-      <h5 id="input-info" hidden="true"></h5>
-      <p id="longitude"></p>
-      <p id="latitude"></p>
-      <p id="lök"></p>
+    <div id ="output">
+      <h3 id="header">HEJS</h3>
+      <p id="temp"></p>
+      <p id="windspeed"></p>
+      <p id="weather"></p>
     </div>
   </body>
 </html>
