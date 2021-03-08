@@ -5,6 +5,11 @@
 
 }
 
+#pageTitle {
+  font-size: 80px;
+  text-align: center;
+}
+
 #inputCity {
   background-color: white;
   color: black;
