@@ -2,12 +2,24 @@
   background-color: #197aa7;
   color:white;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
 }
 
 #pageTitle {
   font-size: 80px;
   text-align: center;
+}
+
+#inputWrapper {
+  width: 20%;
+  margin: 30px auto;
+  background-color: teal;
+  
+}
+
+.inputInnerWrapper {
+  text-align: left;
+  background-color: teal;
+  display: inline;
 }
 
 #inputCity {
