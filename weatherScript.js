@@ -1,7 +1,9 @@
 "use strict";
 
-import getWeather from './openWeatherAPI.js';
+import getWeather from './ExternalAPIs/openWeatherAPI.js';
 import isString from './typeChecks.js';
+import getVenues from './ExternalAPIs/fourSquareAPI.js';
+
 
 //Vill bara ha det uppskrivet, samlat nånstans.
 let htmlElements = ["inputCity", "input-info", "output"];
@@ -30,7 +32,7 @@ const getWeatherPressed = async function() {
 
   //Checking against module typeChecks.js
   if(isString(city)) {
-    const weatherDetails = await getWeather(city);
+    const weatherDetails = await getWeather(city); //<--openWeatherAPI.js
 
     //cod is received http code.
     if(!weatherDetails)
@@ -72,5 +74,9 @@ const kelvtinToCelcius = function (kelvin) {
 
 getWeatherButton.onclick = getWeatherPressed;
 
+const getDirty = async function() {
 
+  getVenues("London", 1);
+}
+getWeatherButton.onclick = getDirty;
 

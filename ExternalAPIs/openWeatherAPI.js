@@ -14,9 +14,6 @@ const apiKey = "7534ad9b667e08b24091ef78f4507532";
 const apiBase = 'https://api.openweathermap.org/data/2.5/';
 
 async function getWeather(city) {
-  console.log("getWeather");
-
-  //London
 
   let weatherData = await fetch(apiBase+`weather?q=${city}&appid=${apiKey}`, {
     method: "GET"
