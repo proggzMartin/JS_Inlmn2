@@ -3,13 +3,35 @@
 import getWeather from './ExternalAPIs/openWeatherAPI.js';
 import isString from './typeChecks.js';
 import getVenues from './ExternalAPIs/fourSquareAPI.js';
-
+import createInputObject from './ExternalAPIs/createHTMLElements.js';
 
 //Vill bara ha det uppskrivet, samlat nånstans.
 let htmlElements = ["inputCity", "input-info", "output"];
 
 let inputCity = document.getElementById("inputCity");
 inputCity.value="Göteborg";
+
+let radioButtons = document.getElementById("radioButtons");
+
+let radioIds = [ "Only weather", "Only attractions", "Filter alphabetically" ];
+
+for (let i = 0; i < radioIds.length; i++) {
+
+  var wrapDiv = document.createElement("div");
+  var radioAndLabel = createInputObject('radio', radioIds[i]);
+  radioAndLabel.input.name = 'options';
+
+  radioAndLabel.input.addEventListener('change', () => {
+
+    console.log("Changed on: "+i);
+
+  });
+  
+  wrapDiv.appendChild(radioAndLabel.input);
+  wrapDiv.appendChild(radioAndLabel.label);
+
+  radioButtons.appendChild(wrapDiv);
+}
 
 
 const out = {

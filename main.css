@@ -9,13 +9,25 @@
   text-align: center;
 }
 
+#goButton:hover {
+  background-color: tomato;
+  color:white;
+}
+
+#goButton {
+  margin-left: 5px;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  outline: none;
+}
+
 #inputWrapper {
   width: 40%;
   margin: 30px auto;
   text-align: center;
 }
 
-#wrapper2 {
+#radioButtons {
   text-align: left;
 }
 

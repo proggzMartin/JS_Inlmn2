@@ -35,8 +35,6 @@ function createInputObject(type, value) {
 
   else {
 
-    input.name = type;
-
     let label = document.createElement("label");
     label.innerHTML = value;
 
