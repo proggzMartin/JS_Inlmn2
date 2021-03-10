@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/9ae1100e3b.js" crossorigin="anonymous"></script>
 
-    <script src="weatherScript.js" type="module" defer></script>
+    <script src="siteScript.js" type="module" defer></script>
     <link href="main.css" rel="stylesheet"/>
     <title>Document</title>
   </head>
@@ -16,23 +16,26 @@
     <hr/>
 
     <div id="inputWrapper">
-      <div class="inputInnerWrapper">
-        <label>Skriv in en stad för att få väder:</label>
-        <br/>
-        <input type="text" id="inputCity" value="London"> </input>
-        <br/><br/>
-        <button id="getWeatherButton" type="button" >GET DATA</button>
 
-        
-      </div>
       <div class="inputInnerWrapper">
-        <input type="radio">input1</input>
-        <input type="radio">input2</input>
-        <input type="radio">input3</input>
+        <input type="text" id="inputCity"/>
       </div>
-      
+
+      <div class="inputInnerWrapper" id="wrapper2">
+        <div>
+          <input type="radio" name="options" class="inputBlock"/><label>Only weather</label>
+        </div>
+        <div>
+          <input type="radio" name="options" class="inputBlock"/><label>Only attractions</label>
+        </div>
+        <div>
+          <input type="radio" name="options" class="inputBlock"/><label>Filter alphabetically</label>
+        </div>
+
+      </div>
     </div>
-    
+    <hr/>
+    <!-- FLEXbox nytt, display gammalt. flexbopx 1-dim -->
     <div id ="output" hidden="true">
       <h3 id="header">HEJS</h3>
       <p id="temp"></p>

@@ -26,8 +26,6 @@ async function getVenues(city, limit) {
     console.log(data.response.groups[0]);
     console.log(data.response.groups[0].items);
 
-
-
     return data;
   })
   .catch(error => console.log("Something went wrong: "+error));

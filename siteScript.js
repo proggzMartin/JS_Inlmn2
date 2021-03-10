@@ -8,11 +8,9 @@ import getVenues from './ExternalAPIs/fourSquareAPI.js';
 //Vill bara ha det uppskrivet, samlat nånstans.
 let htmlElements = ["inputCity", "input-info", "output"];
 
-let getWeatherButton = document.getElementById("getWeatherButton");
 let inputCity = document.getElementById("inputCity");
+inputCity.value="Göteborg";
 
-
-// let output = document.getElementById("output");
 
 const out = {
   "output": document.getElementById("output"),
@@ -71,12 +69,8 @@ const kelvtinToCelcius = function (kelvin) {
   return Math.round(kelvin - 273.15);
 }
 
+getWeatherPressed();
 
-getWeatherButton.onclick = getWeatherPressed;
 
-const getDirty = async function() {
 
-  getVenues("London", 1);
-}
-getWeatherButton.onclick = getDirty;
 
