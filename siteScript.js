@@ -12,21 +12,43 @@ let inputCity = document.getElementById("inputCity");
 inputCity.value="Göteborg";
 
 let radioButtons = document.getElementById("radioButtons");
+let showWeather = true;
+let showAttractions = true;
 
-let radioIds = [ "Only weather", "Only attractions", "Filter alphabetically" ];
+let radioIds = [ 
+  { 
+    title: "Only weather",
+    func: () => {
+      showWeather = true;
+      showAttractions = false;
+    }
+  },
+  { 
+    title: "Only attractions",
+    func: () => {
+      showWeather = false;
+      showAttractions = true;
+    } 
+  },
+  { 
+    title: "Filter alphabetically",
+    func: () => {
+      showWeather = true;
+      showAttractions = true;
+    } 
+  }
+];
+
+
 
 for (let i = 0; i < radioIds.length; i++) {
 
   var wrapDiv = document.createElement("div");
-  var radioAndLabel = createInputObject('radio', radioIds[i]);
+  var radioAndLabel = createInputObject('radio', radioIds[i].title);
   radioAndLabel.input.name = 'options';
 
-  radioAndLabel.input.addEventListener('change', () => {
+  radioAndLabel.input.addEventListener('change',radioIds[i].func);
 
-    console.log("Changed on: "+i);
-
-  });
-  
   wrapDiv.appendChild(radioAndLabel.input);
   wrapDiv.appendChild(radioAndLabel.label);
 
