@@ -6,29 +6,35 @@
     <script src="https://kit.fontawesome.com/9ae1100e3b.js" crossorigin="anonymous"></script>
 
     <script src="siteScript.js" type="module" defer></script>
-    <link href="main.css" rel="stylesheet"/>
+    <link href="input.css" rel="stylesheet"/>
+    <link href="output.css" rel="stylesheet"/>
+
     <title>Document</title>
   </head>
 
   <body>
     
-    <h1 id="pageTitle">City travel <i class="fas fa-fighter-jet" style="display: inline; "></i></h5>    
+    <h1 id="pageTitle">City travel <i class="fas fa-fighter-jet" style="display: inline; "></i></h1>    
     <hr/>
 
     <div id="inputWrapper">
 
       <div class="inputInnerWrapper">
         <input type="text" id="inputCity"/><button id="goButton">Go !</button>
-      </div>
+      </div>  
       <div class="inputInnerWrapper" id="radioButtons"></div>
     </div>
+    
     <hr/>
-    <!-- FLEXbox nytt, display gammalt. flexbopx 1-dim -->
-    <div id ="output" hidden="true">
-      <h3 id="header">HEJS</h3>
-      <p id="temp"></p>
-      <p id="windspeed"></p>
-      <p id="weather"></p>
+
+    <div id="weatherWrap" hidden="true">
+      <div id="a">
+        <h3 id="header"></h3>
+        <p id="temp"></p>
+        <p id="windspeed"></p>
+        <p id="weather"></p>
+      </div>
     </div>
+
   </body>
 </html>

@@ -6,7 +6,7 @@ import getVenues from './ExternalAPIs/fourSquareAPI.js';
 import createInputObject from './ExternalAPIs/createHTMLElements.js';
 
 //Vill bara ha det uppskrivet, samlat nånstans.
-let htmlElements = ["inputCity", "input-info", "output"];
+let htmlElements = ["inputCity", "input-info", "weatherWrap"];
 
 let inputCity = document.getElementById("inputCity");
 inputCity.value="Göteborg";
@@ -57,14 +57,14 @@ for (let i = 0; i < radioIds.length; i++) {
 
 
 const out = {
-  "output": document.getElementById("output"),
+  "weatherWrap": document.getElementById("weatherWrap"),
   "header": document.getElementById("header"),
   "temp": document.getElementById("temp"),
   "windspeed": document.getElementById("windspeed"),
   "weather": document.getElementById("weather"),
 }
 
-out.output.style="display: none;"
+out.weatherWrap.style="display: none;"
 
 const outputVisible = false;
 
@@ -105,7 +105,7 @@ const getWeatherPressed = async function() {
   }
 
   //Visa info-div (oavsett om lyckas eller misslyckas)
-  output.style="display: block;"
+  weatherWrap.style="display: block;"
 
 }
 
