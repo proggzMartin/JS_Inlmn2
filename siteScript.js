@@ -60,17 +60,18 @@ const out = {
   weather: document.getElementById("weather"),
 };
 
-out.weatherWrap.style = "display: none;";
-
 const outputVisible = false;
-
 
 function hideWeatherDetails(errorMessage) {
   out.header.innerHTML = errorMessage;
   out.temp.innerHTML = "";
+  out.temp.hidden = true;
   out.windspeed.innerHTML = "";
+  out.windspeed.hidden = true;
   out.weather.innerHTML = "";
+  out.weather.hidden = true;
 }
+
 function setWeatherDetails(hideAll, weatherDetails) {
     out.header.innerHTML = `Väderdata för '${city}' :`;
     out.temp.innerHTML =
@@ -90,7 +91,7 @@ const performSearch = async function () {
   if (isString(city)) {
     if (showWeather) {
       const weatherDetails = await getWeather(city); //<--openWeatherAPI.js
-
+      weatherWrap.hidden = false;
 
       console.log(weatherDetails);
       //cod is received http code.
@@ -115,10 +116,17 @@ const performSearch = async function () {
         out.windspeed.innerHTML = `Vindhastighet ${weatherDetails.wind.speed}m/s`;
         out.weather.innerHTML = `Väderbeskrivning: ${weatherDetails.weather[0].description}.`;
       }
+    } else {
+      //hide weather
+      weatherWrap.hidden = true;
+    }
+    console.log("MELLAN IFS");
 
-      if (showAttractions) {
-      }
-      // setInfoText(weatherDetails);
+    if (showAttractions) {
+      let venues = await getVenues(city, 2);
+
+      console.log("SKAFFADE VENUES:")
+      console.log(venues);
     }
   } else {
     //a city hasn't been inputted yet.
@@ -126,7 +134,6 @@ const performSearch = async function () {
   }
 
   //Visa info-div (oavsett om lyckas eller misslyckas)
-  weatherWrap.style = "display: block;";
 };
 
 const kelvtinToCelcius = function (kelvin) {

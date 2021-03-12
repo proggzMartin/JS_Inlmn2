@@ -8,7 +8,7 @@ const apiBase = "https://api.foursquare.com/v2/venues/explore";
 async function getVenues(city, limit) {
   console.log("getVenues");
 
-  let apiUrl = apiBase+`?client_id=${clientID}&client_secret=${clientSecret}&near=${city}&limit=${10}&v=20211014`;
+  let apiUrl = apiBase+`?client_id=${clientID}&client_secret=${clientSecret}&near=${city}&limit=${limit}&v=20211014`;
 
   let venuesData = await fetch(apiUrl, {
     method: "GET"
