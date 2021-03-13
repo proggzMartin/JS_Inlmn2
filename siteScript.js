@@ -168,8 +168,8 @@ const performSearch = async function () {
           /* ================= */
           /* ================= */
 
-          /* Kommenterad kod fungerar inte; försökte hämta image men får 'forbidden' och felmeddelanden.
-           Testade olika sätt försöka ta bilden, lyckades ej. Får "Access Denied".
+          /* Kommenterad kod fungerar inte; försökte hämta image men får felmeddelande "Access Denied".
+           Testade olika sätt försöka ta bilden, lyckades ej.
            Koden nedan illustrerar försöket. 
 
            console.log("IKONER:")
@@ -178,7 +178,7 @@ const performSearch = async function () {
            console.log("ICONDETAILS:");
            console.log(iconDetails)
            let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id + iconDetails.icon.suffix;
-           let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id;
+           //let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id;
            console.log("ICONDETAILSADDRESS:"); 
            console.log(iconDetailsAddress); 
            let iconImg = document.createElement("img"); 
