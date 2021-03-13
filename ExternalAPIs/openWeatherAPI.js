@@ -22,7 +22,6 @@ async function getWeather(city) {
     return response.json();
   })
   .then(data => {
-    console.log(data);
     return data;
   })
   .catch(error => console.log("Something went wrong: "+error));

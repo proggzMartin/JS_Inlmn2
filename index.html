@@ -6,38 +6,35 @@
     <script src="https://kit.fontawesome.com/9ae1100e3b.js" crossorigin="anonymous"></script>
 
     <script src="siteScript.js" type="module" defer></script>
-    <link href="input.css" rel="stylesheet"/>
-    <link href="output.css" rel="stylesheet"/>
+    <link href="main.css" rel="stylesheet"/>
 
-    <title>Document</title>
+    <title>City Travel</title>
   </head>
 
   <body>
     
-    <h1 id="pageTitle">City travel <i class="fas fa-fighter-jet" style="display: inline; "></i></h1>    
-    <hr/>
+    <h1 id="pageTitle">
+      <i class="fas fa-fighter-jet" style="display: inline; "></i> 
+        City travel
+      <i class="fas fa-fighter-jet" style="display: inline; "></i></h1>    
 
-    <div id="inputWrapper">
-
+    <div id="inputWrapper" class="outerWrapper">
       <div class="inputInnerWrapper">
-        <input type="text" id="inputCity"/><button id="goButton">Go !</button>
+        <input type="text" id="inputCity" class="inputStyle"/><button id="goButton">Go !</button>
       </div>  
       <div class="inputInnerWrapper" id="radioButtons"></div>
     </div>
     
-    <hr/>
 
-    <div id="weatherWrap" hidden="true">
-      <div id="a">
-        <h3 id="header"></h3>
+    <div id="weatherWrap" class="outerWrapper" hidden="true">
+      <div class="innerWrapper">
+        <h3 id="weatherHeader"></h3>
         <p id="temp"></p>
         <p id="windspeed"></p>
         <p id="weather"></p>
       </div>
     </div>
 
-    <div id="venueWrap">
-      
-    </div>
+    <div id="venueWrap" class="outerWrapper"></div>
   </body>
 </html>
