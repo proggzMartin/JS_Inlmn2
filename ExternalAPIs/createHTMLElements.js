@@ -3,6 +3,7 @@
 //Supported elements:
 // * Input with types button, checkbox, radio
 
+//Kod från projektet i kursen, återanvänder.
 
 const availableInputTypes = ['button', 'checkbox', 'radio'];
 

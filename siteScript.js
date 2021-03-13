@@ -5,29 +5,21 @@ import isString from "./typeChecks.js";
 import getVenues from "./ExternalAPIs/fourSquareAPI.js";
 import createInputObject from "./ExternalAPIs/createHTMLElements.js";
 
-//Vill bara ha det uppskrivet, samlat nånstans.
-let htmlElements = [
-  "goButton",
-  "inputCity",
-  "input-info",
-  "weatherWrap",
-  "venueWrap",
-];
 
 let inputCity = document.getElementById("inputCity");
-inputCity.value = "Göteborg";
 
 let radioButtons = document.getElementById("radioButtons");
 let showWeather = true;
-let showAttractions = true;
+let showVenues = true;
 let filterAlphabetically = false;
 
+//Data för radioknappar. Udnerlätta skapandes att fler/färre radioknappar, behöver bara lägga till rad här.
 let radioIds = [
   {
     title: "Only weather",
-    func: () => {
+    func: () => { //Funktion som ska köras när man trycker på radioknapp.
       showWeather = true;
-      showAttractions = false;
+      showVenues = false;
       filterAlphabetically = false;
     },
   },
@@ -35,7 +27,7 @@ let radioIds = [
     title: "Only attractions",
     func: () => {
       showWeather = false;
-      showAttractions = true;
+      showVenues = true;
       filterAlphabetically = false;
     },
   },
@@ -43,7 +35,7 @@ let radioIds = [
     title: "Filter alphabetically",
     func: () => {
       showWeather = true;
-      showAttractions = true;
+      showVenues = true;
       filterAlphabetically = true;
     },
   },
@@ -73,12 +65,7 @@ const out = {
   weather: document.getElementById("weather"),
 };
 
-const venue = {
-  venueWrap: document.getElementById("venueWrap"),
-};
-
-const outputVisible = false;
-
+//Åberopas på mer än 1 ställe; refactor ut för att slippa copypaste-kod.
 function hideWeatherDetails(errorMessage) {
   out.weatherHeader.innerHTML = errorMessage;
   out.temp.innerHTML = "";
@@ -92,19 +79,23 @@ function hideWeatherDetails(errorMessage) {
 
 }
 
-function setWeatherDetails(hideAll, weatherDetails) {
+//Görs i separat funktion för att ge mer readability i metoden "performSearch".
+function setWeatherDetails(city, weatherDetails) {
   out.weatherHeader.innerHTML = `Väderdata för '${city}' :`;
   out.temp.innerHTML =
     `Nuvarande temperatur ${kelvtinToCelcius(
       weatherDetails.main.temp
     )}°C, <br/>` +
-    `Maxtemp: ${kelvtinToCelcius(weatherDetails.main.temp_max)}°C, <br/>` +
+    `Maxtemp: ${kelvtinToCelcius(
+      weatherDetails.main.temp_max
+    )}°C, <br/>` +
     `Mintemp: ${kelvtinToCelcius(weatherDetails.main.temp_min)}°C<br/>` +
     `Feels like ${kelvtinToCelcius(weatherDetails.main.feels_like)}°C`;
   out.windspeed.innerHTML = `Vindhastighet ${weatherDetails.wind.speed}m/s`;
   out.weather.innerHTML = `Väderbeskrivning: ${weatherDetails.weather[0].description}.`;
 }
 
+//När man trycker 'Go' och söker, körs denna funktion.
 const performSearch = async function () {
   let city = inputCity.value;
 
@@ -113,42 +104,28 @@ const performSearch = async function () {
     if (showWeather) {
       const weatherDetails = await getWeather(city); //<--openWeatherAPI.js
 
-      //cod is received http code.
+      
       if (!weatherDetails)
-        //Then something went wrong
         hideWeatherDetails(`Staden '${city}' kunde inte hämtas, orsak okänd.`);
-      else if (weatherDetails.cod === "404")
+      else if (weatherDetails.cod === "404") //cod is received http code.
         hideWeatherDetails(
           `Staden '${city}' kunde inte hämtas, staden hittades inte.`
         );
       else {
-        //all seems good, proceed.
-
-        out.weatherHeader.innerHTML = `Väderdata för '${city}' :`;
-        out.temp.innerHTML =
-          `Nuvarande temperatur ${kelvtinToCelcius(
-            weatherDetails.main.temp
-          )}°C, <br/>` +
-          `Maxtemp: ${kelvtinToCelcius(
-            weatherDetails.main.temp_max
-          )}°C, <br/>` +
-          `Mintemp: ${kelvtinToCelcius(weatherDetails.main.temp_min)}°C<br/>` +
-          `Feels like ${kelvtinToCelcius(weatherDetails.main.feels_like)}°C`;
-        out.windspeed.innerHTML = `Vindhastighet ${weatherDetails.wind.speed}m/s`;
-        out.weather.innerHTML = `Väderbeskrivning: ${weatherDetails.weather[0].description}.`;
+        setWeatherDetails(city, weatherDetails);
         weatherWrap.hidden = false;
       }
     } else {
-      //hide weather div
+      //hide the weather-div
       weatherWrap.hidden = true;
     }
 
-    if (showAttractions) {
+    if (showVenues) {
       //Clear current data in the main div.
       venueWrap.innerHTML = "";
       let venues = await getVenues(city, 10);
 
-      if (! venues || venues.meta.code !== 200) {
+      if (!venues || venues.meta.code !== 200) {
         let errorTitle = document.createElement("h2");
         errorTitle.innerHTML = "Något gick fel när attraktioner skulle hämtas. Försök igen senare.";
         venueWrap.appendChild(errorTitle);
@@ -157,31 +134,30 @@ const performSearch = async function () {
         //beta ner strukturen; behöver bara denna underliggande datan.
         venues = venues.response.groups[0].items;
 
-        //sortera i alfabetisk ordning.
-        //Källa https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
-
+        
         if(filterAlphabetically)
+          //sortera i alfabetisk ordning.
+          //Källa https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
           venues.sort(function(a, b){
             if(a.venue.name < b.venue.name) { return -1; }
             if(a.venue.name > b.venue.name) { return 1; }
             return 0;
           });
-
+        
         for (let i = 0; i < venues.length; i++) {
           if (i > 0 && i % 5 == 0)
             //Want max 5 attractions per row.
             venueWrap.appendChild(document.createElement("br"));
 
-          const element = venues[i];
           let innerWrap = document.createElement("div");
           innerWrap.className = "innerWrapper";
           venueWrap.appendChild(innerWrap);
 
           let venueTitle = document.createElement("h2");
-          venueTitle.innerHTML = element.venue.name;
+          venueTitle.innerHTML = venues[i].venue.name;
           innerWrap.appendChild(venueTitle);
 
-          let venueAddressFormatted = element.venue.location.formattedAddress;
+          let venueAddressFormatted = venues[i].venue.location.formattedAddress;
 
           //Could take array.length-1, one could argue that mentioning country isn't neccesary.
           for (let i = 0; i < venueAddressFormatted.length; i++) {
@@ -191,29 +167,28 @@ const performSearch = async function () {
           }
           /* ================= */
           /* ================= */
+
           /* Kommenterad kod fungerar inte; försökte hämta image men får 'forbidden' och felmeddelanden.
            Testade olika sätt försöka ta bilden, lyckades ej. Får "Access Denied".
            Koden nedan illustrerar försöket. 
-        console.log("IKONER:")
-        console.log(element.venue.categories[0])
-        let iconDetails = element.venue.categories[0];
-        console.log("ICONDETAILS:");
-        console.log(iconDetails)
-        let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id + iconDetails.icon.suffix;
-        let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id;
-        console.log("ICONDETAILSADDRESS:");
 
-        console.log(iconDetailsAddress);
+           console.log("IKONER:")
+           console.log(element.venue.categories[0])
+           let iconDetails = element.venue.categories[0];
+           console.log("ICONDETAILS:");
+           console.log(iconDetails)
+           let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id + iconDetails.icon.suffix;
+           let iconDetailsAddress = iconDetails.icon.prefix + iconDetails.id;
+           console.log("ICONDETAILSADDRESS:"); 
+           console.log(iconDetailsAddress); 
+           let iconImg = document.createElement("img"); 
+           iconImg.src = iconDetailsAddress;
+           venueWrap.appendChild(iconImg);*/
 
-        let iconImg = document.createElement("img");
-
-        iconImg.src = iconDetailsAddress;
-        venueWrap.appendChild(iconImg);*/
-          /* ================= */
-          /* ================= */
+           /* ================= */
+           /* ================= */
         }
       }
-
       venueWrap.hidden = false; //show the venues-section
     } else {
       venueWrap.hidden = true; //else if option not selected, hide the venues section.
@@ -230,6 +205,9 @@ const kelvtinToCelcius = function (kelvin) {
   return Math.round(kelvin - 273.15);
 };
 
+inputCity.value = "Göteborg"; //default-värde vid start.
+
+//Vid start, gör en förstasökning på Göteborg.
 performSearch();
 
 let goButton = document.getElementById("goButton");
